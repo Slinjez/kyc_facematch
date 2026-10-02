@@ -13,5 +13,8 @@ input/*
 output/*
 !output/.gitkeep
 
+# Model pack (326 MB, downloaded on first start)
+models/
+
 # Logs
 *.log

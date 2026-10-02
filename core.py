@@ -19,6 +19,10 @@ from insightface.app import FaceAnalysis  # noqa: E402  (after the warnings filt
 
 MODEL_PACK = "buffalo_l"
 MODEL_NAME = f"insightface/{MODEL_PACK}"
+# Where the model pack lives (<dir>/models/buffalo_l). InsightFace defaults to
+# the running user's profile, which for a startup task/service is the system
+# profile - set FACE_MODEL_DIR on servers so the model sits in a known folder.
+MODEL_ROOT = os.environ.get("FACE_MODEL_DIR", "").strip() or "~/.insightface"
 
 MAX_SIDE = 1600  # downscale large phone photos; detection doesn't need 8MP
 PDF_DPI = 200
@@ -132,7 +136,7 @@ class FaceMatcher:
     def __init__(self, bands: Bands | None = None, det_size: int = 640):
         self.bands = bands or Bands()
         self.model = MODEL_NAME
-        self.app = FaceAnalysis(name=MODEL_PACK, allowed_modules=["detection", "recognition"],
+        self.app = FaceAnalysis(name=MODEL_PACK, root=MODEL_ROOT, allowed_modules=["detection", "recognition"],
                                 providers=["CPUExecutionProvider"])
         self.app.prepare(ctx_id=-1, det_size=(det_size, det_size))
 
