@@ -1,0 +1,17 @@
+SETUP (once)
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+copy .env.example .env      then set FACE_SERVICE_API_KEY
+
+HTTP SERVICE (what the KYC admin calls: http://127.0.0.1:8100/v1/verify)
+
+.venv\Scripts\python app.py
+health check:  curl http://127.0.0.1:8100/health
+under pm2 (from kyc_v02):  pm2 start ecosystem.config.js --only face-service
+
+CLI (ad-hoc checks)
+.venv\Scripts\python facematch.py compares the first two images in .\input
+.venv\Scripts\python facematch.py "C:\path\to\photo1.jpg" "C:\path\to\photo2.jpg"
+
+--dev run
+.venv\Scripts\python app.py

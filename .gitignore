@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets - .env.example is the committed template
+.env
+!.env.example
+
+# Test photos and results from the CLI - never commit faces
+input/*
+!input/.gitkeep
+output/*
+!output/.gitkeep
+
+# Logs
+*.log
